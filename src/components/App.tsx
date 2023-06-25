@@ -1,5 +1,6 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
+
 import { Home } from './screens';
 
 function App() {
