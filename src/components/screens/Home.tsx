@@ -1,4 +1,4 @@
-import type { ScreenProps } from '../Navigator';
+import type { ScreenProps } from '@components/Navigator';
 
 import { StyleSheet, Text, View } from 'react-native';
 
