@@ -8,7 +8,6 @@ import Navigator from './Navigator';
 
 function App() {
   const colorScheme = useColorScheme();
-
   const [loaded] = useFonts({
     Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
     InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
