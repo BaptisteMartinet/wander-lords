@@ -1,7 +1,7 @@
 {
   "name": "wander-lords",
   "version": "1.0.0",
-  "main": "src/App.tsx",
+  "main": "src/components/App.tsx",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
