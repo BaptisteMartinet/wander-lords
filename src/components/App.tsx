@@ -1,12 +1,11 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
-
-import { Home } from './screens';
+import Navigator from './Navigator';
 
 function App() {
   return (
     <>
-      <Home />
+      <Navigator />
       <StatusBar />
     </>
   );
