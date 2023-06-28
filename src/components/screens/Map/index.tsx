@@ -14,8 +14,19 @@ export default function Home(props: HomeProps) {
         provider={PROVIDER_GOOGLE}
         customMapStyle={mapStyle}
         showsUserLocation
+        userLocationPriority="low"
+        initialCamera={{
+          center: { latitude: 48.87239371685871, longitude: 2.7172108367085457 }, // todo initial location
+          heading: 0,
+          pitch: 0,
+          zoom: 16,
+        }}
         minZoomLevel={5}
-        maxZoomLevel={8}
+        maxZoomLevel={16}
+        onRegionChangeComplete={(region, details) => {
+          console.log(region);
+          /* TODO call api with new region */
+        }}
       />
     </View>
   );
@@ -26,7 +37,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
 });
