@@ -24,7 +24,14 @@ export default function Navigator() {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Map">
-        <Tab.Screen name="Map" component={Map} options={{ tabBarIcon: (props) => <HomeIcon /> }} />
+        <Tab.Screen
+          name="Map"
+          component={Map}
+          options={{
+            tabBarIcon: (props) => <HomeIcon />,
+            headerShown: false,
+          }}
+        />
         <Tab.Screen
           name="Clan"
           component={Clan}
