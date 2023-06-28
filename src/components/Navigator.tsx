@@ -2,8 +2,8 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Clan } from './screens';
 import { Home as HomeIcon, Group as GroupIcon } from '@tamagui/lucide-icons';
+import { Home, Clan } from './screens';
 
 export type RootTabParamList = {
   Home: undefined;
