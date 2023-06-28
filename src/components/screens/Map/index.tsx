@@ -1,12 +1,26 @@
 import type { ScreenProps } from '@components/Navigator';
 
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, LatLng } from 'react-native-maps';
+import * as Location from 'expo-location';
 import mapStyle from './mapStyle.json';
 
 export type HomeProps = ScreenProps<'Map'>;
 
 export default function Home(props: HomeProps) {
+  const [location, setLocation] = React.useState<LatLng | null>(null);
+
+  React.useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') return;
+      const location = await Location.getCurrentPositionAsync({});
+      setLocation(location.coords);
+    })().catch(console.error);
+  }, []);
+
+  if (!location) return null;
   return (
     <View style={styles.container}>
       <MapView
@@ -16,15 +30,15 @@ export default function Home(props: HomeProps) {
         showsUserLocation
         userLocationPriority="low"
         initialCamera={{
-          center: { latitude: 48.87239371685871, longitude: 2.7172108367085457 }, // todo initial location
+          center: location,
           heading: 0,
           pitch: 0,
           zoom: 16,
         }}
         minZoomLevel={5}
         maxZoomLevel={16}
+        rotateEnabled={false}
         onRegionChangeComplete={(region, details) => {
-          console.log(region);
           /* TODO call api with new region */
         }}
       />
