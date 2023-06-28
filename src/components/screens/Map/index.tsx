@@ -33,10 +33,10 @@ export default function Home(props: HomeProps) {
           center: location,
           heading: 0,
           pitch: 0,
-          zoom: 16,
+          zoom: 17,
         }}
         minZoomLevel={5}
-        maxZoomLevel={16}
+        maxZoomLevel={17}
         rotateEnabled={false}
         onRegionChangeComplete={(region, details) => {
           /* TODO call api with new region */
