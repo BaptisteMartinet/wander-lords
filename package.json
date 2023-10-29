@@ -24,6 +24,7 @@
     "expo-linear-gradient": "~12.1.2",
     "expo-location": "~15.1.1",
     "expo-status-bar": "~1.4.4",
+    "proj4": "^2.9.2",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.71.8",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/proj4": "^2.5.4",
     "@types/react": "~18.0.14",
     "eslint": "^8.43.0",
     "eslint-config-universe": "^11.2.0",
