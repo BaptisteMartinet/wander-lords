@@ -7,14 +7,14 @@ import proj4 from 'proj4';
 */
 
 const LatLngProjector = 'EPSG:4326'; // WGS84 (degrees)
-const GoogleProjector = 'EPSG:3857'; // GOOGLE (meters)
+const MetersProjector = 'EPSG:3857'; // GOOGLE (meters)
 
 export function toMeterCoords(lat: number, lng: number) {
-  return proj4(LatLngProjector, GoogleProjector, { x: lng, y: lat });
+  return proj4(LatLngProjector, MetersProjector, { x: lng, y: lat });
 }
 
 export function toLatLng(x: number, y: number) {
-  return proj4(GoogleProjector, LatLngProjector, { x, y });
+  return proj4(MetersProjector, LatLngProjector, { x, y });
 }
 
 export class Point {
@@ -47,5 +47,9 @@ export class Point {
 
   get y() {
     return this._meterCoords.y;
+  }
+
+  public toString() {
+    return `LatLng: [${this._lat}, ${this._lng}] | Meters: [${this._meterCoords.x}, ${this._meterCoords.y}]`;
   }
 }
