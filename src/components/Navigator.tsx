@@ -3,16 +3,20 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
-  Home as HomeIcon,
+  Store as StoreIcon,
+  UserCircle as UserCircleIcon,
+  Map as MapIcon,
   Group as GroupIcon,
-  Settings as SettingsIcon,
+  ListOrdered as ListOrderedIcon,
 } from '@tamagui/lucide-icons';
-import { Map, Clan, Settings } from './screens';
+import { Store, Profile, Map, Clan, Leaderboard } from './screens';
 
 export type RootTabParamList = {
+  Store: undefined;
+  Profile: undefined;
   Map: undefined;
   Clan: undefined;
-  Settings: undefined;
+  Leaderboard: undefined;
 };
 
 // eslint-disable-next-line prettier/prettier
@@ -25,10 +29,24 @@ export default function Navigator() {
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Map">
         <Tab.Screen
+          name="Store"
+          component={Store}
+          options={{
+            tabBarIcon: (props) => <StoreIcon />,
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarIcon: (props) => <UserCircleIcon />,
+          }}
+        />
+        <Tab.Screen
           name="Map"
           component={Map}
           options={{
-            tabBarIcon: (props) => <HomeIcon />,
+            tabBarIcon: (props) => <MapIcon />,
             headerShown: false,
           }}
         />
@@ -38,9 +56,9 @@ export default function Navigator() {
           options={{ tabBarIcon: (props) => <GroupIcon /> }}
         />
         <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{ tabBarIcon: (props) => <SettingsIcon /> }}
+          name="Leaderboard"
+          component={Leaderboard}
+          options={{ tabBarIcon: (props) => <ListOrderedIcon /> }}
         />
       </Tab.Navigator>
     </NavigationContainer>
