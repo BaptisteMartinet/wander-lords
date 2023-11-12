@@ -3,32 +3,37 @@ import type { ScreenProps } from '@components/Navigator';
 
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Polygon } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { Point, toLatLng } from '@utils/index';
+import { Point, Terrain } from '@utils/index';
 import mapStyle from './mapStyle.json';
 
 const WorldBounds = {
-  sw: new Point(-85.06, -180),
-  ne: new Point(85.06, 180),
+  sw: new Point({ lat: -85.06, lng: -180 }),
+  ne: new Point({ lat: 85.06, lng: 180 }),
 };
 
-const EdgeSize = 1_000_000; // in meters
+console.log(WorldBounds.sw.toString());
+console.log(WorldBounds.ne.toString());
 
-function genGrid() {
-  const { sw, ne } = WorldBounds;
-  const markers: LatLng[] = [];
-  for (let x = sw.x; x < ne.x; x += EdgeSize) {
-    for (let y = sw.y; y < ne.y; y += EdgeSize) {
-      const coords = toLatLng(x, y);
-      markers.push({ latitude: coords.y, longitude: coords.x });
+console.log('X diff: ', WorldBounds.ne.x - WorldBounds.sw.x);
+console.log('Y diff: ', WorldBounds.ne.y - WorldBounds.sw.y);
+
+const EdgeSize = 50; // in meters
+
+function genTerrains() {
+  const start = new Point({ lat: 48.87358869573632, lng: 2.71393284201622 });
+  const terrains: Terrain[] = [];
+  for (let x = start.x; x < start.x + 1000; x += EdgeSize) {
+    for (let y = start.y; y < start.y + 1000; y += EdgeSize) {
+      const bottomLeft = Point.fromMeterCoords({ x, y });
+      terrains.push(new Terrain({ bottomLeft, size: EdgeSize }));
     }
   }
-  return markers;
+  return terrains;
 }
 
-const markers = genGrid();
-console.log('Markers: ', markers.length);
+const terrains = genTerrains();
 
 export type HomeProps = ScreenProps<'Map'>;
 
@@ -60,25 +65,24 @@ export default function Home(props: HomeProps) {
           zoom: 17,
         }}
         // minZoomLevel={5}
-        maxZoomLevel={17}
+        // maxZoomLevel={17}
         rotateEnabled={false}
         onRegionChangeComplete={(region, details) => {
           /* TODO call api with new region */
           console.log(region.latitude, region.longitude);
         }}
       >
-        {markers.map((marker, idx) => (
-          <Marker key={idx} coordinate={marker} title={`Marker#${idx}`} />
-        ))}
-        {/* {terrains.map((terrain, idx) => (
+        {terrains.map((terrain, idx) => (
           <Polygon
             key={idx}
-            coordinates={terrain.coords}
+            coordinates={terrain.polygon}
             tappable
-            onPress={() => console.log('tap')}
-            strokeWidth={10}
+            onPress={() => console.log(`Pressed tile#${idx}`)}
+            strokeWidth={4}
+            strokeColor="white"
+            fillColor="rgba(242, 170, 126, .5)"
           />
-        ))} */}
+        ))}
       </MapView>
     </View>
   );
