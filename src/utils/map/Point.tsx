@@ -1,19 +1,33 @@
-import { toLatLng, toMeterCoords } from './projection';
+import { metersToLatLng, latLngToMeters } from './projection';
+
+export interface PointArgs {
+  lat: number;
+  lng: number;
+}
 
 export default class Point {
-  private _meterCoords;
+  private _lat;
+  private _lng;
+  private _x;
+  private _y;
 
-  constructor(private _lat: number, private _lng: number) {
-    this._meterCoords = toMeterCoords(_lat, _lng);
+  constructor(args: PointArgs) {
+    const { lat, lng } = args;
+    this._lat = lat;
+    this._lng = lng;
+    const { x, y } = latLngToMeters({ lat, lng });
+    this._x = x;
+    this._y = y;
   }
 
-  public static fromMeterCoords(x: number, y: number) {
-    const latLng = toLatLng(x, y);
-    return new Point(latLng.x, latLng.y);
+  public static fromMeterCoords(args: { x: number; y: number }) {
+    const { x, y } = args;
+    const { lat, lng } = metersToLatLng({ x, y });
+    return new Point({ lat, lng });
   }
 
   public static fromLatLng(lat: number, lng: number) {
-    return new Point(lat, lng);
+    return new Point({ lat, lng });
   }
 
   get lat() {
@@ -25,14 +39,14 @@ export default class Point {
   }
 
   get x() {
-    return this._meterCoords.x;
+    return this._x;
   }
 
   get y() {
-    return this._meterCoords.y;
+    return this._y;
   }
 
   public toString() {
-    return `LatLng: [${this._lat}, ${this._lng}] | Meters: [${this._meterCoords.x}, ${this._meterCoords.y}]`;
+    return `LatLng: [${this._lat}, ${this._lng}] | Meters: [${this._x}, ${this._y}]`;
   }
 }
