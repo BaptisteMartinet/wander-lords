@@ -16,6 +16,6 @@ export function latLngToMeters(args: { lat: number; lng: number }) {
 
 export function metersToLatLng(args: { x: number; y: number }) {
   const { x, y } = args;
-  const { x: lat, y: lng } = proj4(MetersProjector, LatLngProjector, { x, y });
+  const { x: lng, y: lat } = proj4(MetersProjector, LatLngProjector, { x, y });
   return { lat, lng };
 }
