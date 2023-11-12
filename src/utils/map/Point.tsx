@@ -26,10 +26,6 @@ export default class Point {
     return new Point({ lat, lng });
   }
 
-  public static fromLatLng(lat: number, lng: number) {
-    return new Point({ lat, lng });
-  }
-
   get lat() {
     return this._lat;
   }
